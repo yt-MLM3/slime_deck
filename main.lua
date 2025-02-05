@@ -5,12 +5,14 @@ SMODS.create_mod_badges(obj, badges)
 
 -- Lily Joker
 SMODS.Joker {
+  discovered = true,
+  unlocked = false,
+
     key = 'LilyJoker',
     rarity = 1,
     atlas = 'JokersTextures',
     pos = { x = 0, y = 0 },
     cost = 4,
-    discovered = true,
 
     loc_txt = {
         name = 'Lily',
