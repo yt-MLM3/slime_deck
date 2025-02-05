@@ -1,0 +1,14 @@
+{
+	"id": "slimedeck",
+	"name": "The Slime's Deck",
+	"display_name": "Slime's Deck",
+	"author": ["MLM3"],
+	"description": "a mod",
+	"prefix": "slimedeck",
+	"main_file": "main.lua",
+	"priority": 0,
+	"badge_colour": "",
+	"badge_text_colour": "",
+	"version": "0.1.0",
+	"dependencies": []
+}
