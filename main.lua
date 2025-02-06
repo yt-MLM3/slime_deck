@@ -116,7 +116,7 @@ SMODS.Joker {
   calculate = function(self, card, context)
     if context.joker_main then
       return {
-        mult = card.ability.extra.chips
+        chips = card.ability.extra.chips
       }
     end
 
