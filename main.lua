@@ -1,9 +1,9 @@
 -- SMODS.load_file("cry_credits_badges.lua")()
 SMODS.load_file('atlas.lua')()
 
-SMODS.create_mod_badges(obj, badges)
+-- SMODS.create_mod_badges(obj, badges)
 
--- Lily Joker
+-- Lily Joker -- not working
 SMODS.Joker {
   discovered = true,
   unlocked = false,
@@ -141,7 +141,8 @@ SMODS.Joker {
   atlas = 'GeorgeTexture',
   pos = { x = 0, y = 0 },
   cost = 1,
-
+  display_size = { w = 71, h = 95 },
+  pixel_size = { w = 71, h = 95 },
   loc_txt = {
       name = 'george',
       
@@ -166,7 +167,8 @@ SMODS.Joker {
   end
 }
 
--- Mint Joker
+
+-- Mint Joker -- not working
 SMODS.Joker {
   discovered = true,
   unlocked = false,
@@ -220,6 +222,7 @@ SMODS.Joker {
   end
 }
 
+
 -- Ivory Joker
 SMODS.Joker {
   key = 'IvoryJoker',
@@ -255,6 +258,54 @@ SMODS.Joker {
           return true
         end
       }))
+    end
+  end
+}
+
+-- Dee Foot Joker
+SMODS.Joker {
+  key = 'DeeFootJoker',
+  atlas = 'JokersTextures',
+  pos = { x = 3, y = 0},
+  soul_pos = { x = 3, y = 1},
+  rarity = 4,
+  cost = 3+17,
+
+  loc_txt = {
+    name = 'Dee Foot',
+    text = {
+      "If played hand contains",
+      "a {C:attention}3{}, an {C:attention}Ace{} and a {C:attention}7{},",
+      "add {X:mult,C:white}x#1#{} Mult",
+      "for each one scored",
+    }
+  },
+  config = { extra = {x_mult = 3.17} },
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.x_mult}}
+  end,
+
+  calculate = function(self, card, context)
+    if context.individual and context.cardarea == G.play then
+      local numbers = {
+        ['Three'] = 0,
+        ['Ace'] = 0,
+        ['Seven'] = 0,
+      }
+  
+      for i = 1, #context.full_hand do
+        if context.full_hand[i]:get_id() == 3 and numbers['Three'] == 0  then numbers['Three'] = numbers['Three'] + 1
+        elseif context.full_hand[i]:get_id() == 14 and numbers['Ace'] == 0  then numbers['Ace'] = numbers['Ace'] + 1
+        elseif context.full_hand[i]:get_id() == 7 and numbers['Seven'] == 0  then numbers['Seven'] = numbers['Seven'] + 1 
+        end
+      end
+      if numbers['Three'] > 0 and numbers['Ace'] > 0 and numbers['Seven'] > 0 then
+        return {
+          -- message = localize{type='variable',key='a_xmult',vars={card.ability.extra}},
+          Xmult = card.ability.extra.x_mult,
+          card = card
+        }
+      end
     end
   end
 }
