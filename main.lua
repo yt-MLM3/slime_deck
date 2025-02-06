@@ -309,3 +309,34 @@ SMODS.Joker {
     end
   end
 }
+
+-- Blobee Joker
+SMODS.Joker {
+  key = "BlobeeJoker",
+  rarity = 1,
+  atlas = 'JokersTextures',
+  pos = { x = 0, y = 1},
+  cost = 3,
+
+  loc_txt = {
+    name = "Blobee",
+    text = {
+      "{C:blue}+#2#{} hand,",
+      "{C:attention}#1#{} hand size",
+      "each round",
+    }
+  },
+  config = { extra = {hand_size = -1, hands_number = 1}},
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.hand_size, card.ability.extra.hands_number} }
+  end,
+
+  add_to_deck = function(self, card, from_debuff)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands + card.ability.extra.hands_number
+		G.hand:change_size(card.ability.extra.hand_size)
+	end,
+	remove_from_deck = function(self, card, from_debuff)
+		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands_number
+		G.hand:change_size(-card.ability.extra.hand_size)
+	end
+}
