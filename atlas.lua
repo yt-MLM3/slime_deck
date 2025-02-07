@@ -11,3 +11,10 @@ SMODS.Atlas{
   px = 251,
   py = 478
 }
+
+SMODS.Atlas{
+  key = "VouchersTextures",
+  path = "SlimeVouchers.png",
+  px = 71, 
+  py = 95
+}

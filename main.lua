@@ -1,7 +1,11 @@
 -- SMODS.load_file("cry_credits_badges.lua")()
 SMODS.load_file('atlas.lua')()
+SMODS.load_file('credits.lua')()
+-- local config = SMODS.current_mod.config
 
 -- SMODS.create_mod_badges(obj, badges)
+
+
 
 -- Lily Joker -- not working
 SMODS.Joker {
@@ -339,4 +343,17 @@ SMODS.Joker {
 		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands_number
 		G.hand:change_size(-card.ability.extra.hand_size)
 	end
+}
+
+-- MR Van Voucher
+SMODS.Voucher {
+  key = "MRVanVoucher",
+  loc_txt = {
+    name = "The van",
+    text = {
+      "dead man yaoi"
+    }
+  },
+  atlas = "VouchersTextures",
+  pos = { x = 0, y = 0 },
 }
