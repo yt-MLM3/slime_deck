@@ -351,9 +351,23 @@ SMODS.Voucher {
   loc_txt = {
     name = "The van",
     text = {
-      "dead man yaoi"
+      "{C:spectral}Spectral{} booster packs",
+      "appear {C:attention}#1#X{} more",
+      "frequently in the shop",
     }
   },
   atlas = "VouchersTextures",
   pos = { x = 0, y = 0 },
+  cost = 10,
+  config = { extra = { chancemult = 2 } },
+  loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chancemult } }
+	end,
+
+  redeem = function(self, card)
+    G.P_CENTERS.p_spectral_normal_1.weight = G.P_CENTERS.p_spectral_normal_1.weight * card.ability.extra.chancemult
+    G.P_CENTERS.p_spectral_normal_2.weight = G.P_CENTERS.p_spectral_normal_2.weight * card.ability.extra.chancemult
+    G.P_CENTERS.p_spectral_jumbo_1.weight = G.P_CENTERS.p_spectral_jumbo_1.weight * card.ability.extra.chancemult
+    G.P_CENTERS.p_spectral_mega_1.weight = G.P_CENTERS.p_spectral_mega_1.weight * card.ability.extra.chancemult
+  end
 }
