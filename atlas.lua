@@ -6,13 +6,6 @@ SMODS.Atlas{
 }
 
 SMODS.Atlas{
-  key = "GeorgeTexture",
-  path = "george.png",
-  px = 251,
-  py = 478
-}
-
-SMODS.Atlas{
   key = "VouchersTextures",
   path = "SlimeVouchers.png",
   px = 71, 

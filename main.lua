@@ -138,40 +138,6 @@ SMODS.Joker {
 }
 
 
--- george Joker
-SMODS.Joker {
-  key = 'GeorgeJoker',
-  rarity = 1,
-  atlas = 'GeorgeTexture',
-  pos = { x = 0, y = 0 },
-  cost = 1,
-  display_size = { w = 71, h = 95 },
-  pixel_size = { w = 71, h = 95 },
-  loc_txt = {
-      name = 'george',
-      
-      text = {
-          "{C:mult}+#1#{} Mult"
-      }
-  },
-
-  config = { extra = { mult = 5 } },
-
-  loc_vars = function(self, info_queue, card)
-      return { vars = { card.ability.extra.mult} }
-    end,
-
-    
-  calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        mult = card.ability.extra.mult,
-      }
-    end
-  end
-}
-
-
 -- Mint Joker -- not working
 SMODS.Joker {
   discovered = true,
@@ -239,7 +205,7 @@ SMODS.Joker {
     name = 'Ivory',
         
     text = {
-      "{C:green}#1# in #2#{} chance to spawn",
+      "{C:green}#1# in #2#{} chance to create",
       "a {C:dark_edition}negative{} {C:attention}Ice Cream{} Joker",
       "when blind is selected",
     }
@@ -343,6 +309,82 @@ SMODS.Joker {
 		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands_number
 		G.hand:change_size(-card.ability.extra.hand_size)
 	end
+}
+
+-- george Joker
+SMODS.Joker {
+  key = 'GeorgeJoker',
+  rarity = 1,
+  atlas = 'JokersTextures',
+  pos = { x = 0, y = 2 },
+  cost = 1,
+  pixel_size = { w = 51, h = 95 },
+  -- display_size = { w = 51, h = 95 },
+  loc_txt = {
+      name = 'george',
+      
+      text = {
+          "{C:mult}+#1#{} Mult"
+      }
+  },
+
+  config = { extra = { mult = 5 } },
+
+  loc_vars = function(self, info_queue, card)
+      return { vars = { card.ability.extra.mult} }
+    end,
+
+    
+  calculate = function(self, card, context)
+    if context.joker_main then
+      return {
+        mult = card.ability.extra.mult,
+      }
+    end
+  end
+}
+
+-- Controversial Tilapia Joker
+SMODS.Joker {
+  key = "CTilapiaJoker",
+  rarity = 1,
+  atlas = 'JokersTextures',
+  pos = { x = 1, y = 2},
+  cost = 3,
+
+  loc_txt = {
+    name = "controversial tilapia in a frying pan",
+    text = {
+      "gives {X:mult,C:white}x#1#{} Mult but {C:chips}#2#{} chips",
+      " because it's so controversial",
+      "{C:inactive}(believes the moon landing was fake)",
+    }
+  },
+
+  config = { extra = { x_mult = 2, chips = -30 } },
+
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.extra.x_mult, card.ability.extra.chips } }
+  end,
+
+  calculate = function(self, card, context)
+    if context.joker_main then
+      SMODS.calculate_effect({x_mult = card.ability.extra.x_mult}, card)
+      if hand_chips + card.ability.extra.chips >= 0 then
+        return {
+          chips = card.ability.extra.chips,
+        }
+      else
+        hand_chips = 0,
+        update_hand_text({delay = 0}, {chips = 0})
+        return {
+          message = tostring(card.ability.extra.chips),
+          colour = G.C.CHIPS,
+          card = card,
+        }
+      end
+    end
+  end,
 }
 
 -- MR Van Voucher
