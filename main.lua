@@ -391,7 +391,7 @@ SMODS.Joker {
 SMODS.Voucher {
   key = "MRVanVoucher",
   loc_txt = {
-    name = "The van",
+    name = "The Van",
     text = {
       "{C:spectral}Spectral{} booster packs",
       "appear {C:attention}#1#X{} more",
