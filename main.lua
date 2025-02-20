@@ -413,3 +413,32 @@ SMODS.Voucher {
     G.P_CENTERS.p_spectral_mega_1.weight = G.P_CENTERS.p_spectral_mega_1.weight * card.ability.extra.chancemult
   end
 }
+
+-- MR Laptop Voucher
+SMODS.Voucher {
+  key = "MRLaptopVoucher",
+  loc_txt = {
+    name = "The Laptop",
+    text = {
+      "{C:spectral}Spectral{} cards may",
+      "appear in the shop,",
+    }
+  },
+  atlas = "VouchersTextures",
+  pos = { x = 1, y = 0 },
+  cost = 10,
+  requires = {'v_slimedeck_MRVanVoucher'},
+
+  config = { extra = { chancespectral = 2, timesspectral = 2 } },
+  loc_vars = function(self, info_queue, card)
+		return { vars = { card.ability.extra.chancespectral, card.ability.extra.timesspectral } }
+	end,
+
+  redeem = function(self, card)
+    if G.GAME.spectral_rate <= 0 then
+      G.GAME.spectral_rate = G.GAME.spectral_rate + card.ability.extra.chancespectral
+    else
+      G.GAME.spectral_rate = G.GAME.spectral_rate * card.ability.extra.timesspectral
+    end
+  end
+}
