@@ -154,17 +154,15 @@ SMODS.Joker {
     name = 'Mint',
         
     text = {
-      "{C:chips}+#1#{} Chips for each other {C:attention}Joker{}",
-      "{C:chips}-#2#{} Chips for each hand played",
-      "{C:chips}+#3#{} Chips for each {C:attention}Joker{} added",
+      "{C:chips}#1#{} chips",
       -- "{s:0.8}(They can get debuffed)",
       -- "chips: #1# / chips removed: #2#",
     }
   },
 
-  config = { extra = { chips = 100, chip_removal = 5, chip_add = 20 }},
+  config = { extra = { chips = 8 }},
   loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.extra.chips, card.ability.extra.chip_removal, card.ability.extra.chip_add } }
+    return { vars = { card.ability.perish_tally } }
   end,
   calculate = function(self, card, context)
     if context.other_joker and card ~= context.other_joker then
@@ -190,6 +188,44 @@ SMODS.Joker {
     -- end
 
   end
+}
+
+-- Mint Joker Ice Cream Sticker
+SMODS.Sticker {
+  key = 'MintSticker',
+  atlas = "StickersTextures",
+  pos = { x = 0, y = 0 },
+  loc_txt = {
+    name = 'Mint Ice Cream',
+    text = {
+      "This card acts like",
+      "an {C:attention}Ice Cream{}",
+      "{C:inactive}({C:chips}+#1#{C:inactive} chips left)",
+      "{s:0.8}(gets eaten at 0 chips)",
+
+    },
+    label = "Ice Cream"
+  },
+  badge_colour = HEX("64C3FE"),
+
+  default_compat = true,
+  rate = 1,
+  sets = {
+    Joker = true
+  },
+
+  config = {
+    extra = {
+      chips = G.P_CENTERS.j_ice_cream.config.extra.chips,
+      chip_mod = G.P_CENTERS.j_ice_cream.config.extra.chip_mod,
+    }
+  },
+
+  loc_vars = function(self, info_queue, center)
+    return { vars = { self.config.extra.chips, self.config.extra.chip_mod } }
+  end,
+
+  should_apply = true,
 }
 
 
@@ -309,6 +345,51 @@ SMODS.Joker {
 		G.GAME.round_resets.hands = G.GAME.round_resets.hands - card.ability.extra.hands_number
 		G.hand:change_size(-card.ability.extra.hand_size)
 	end
+}
+
+-- john Joker
+SMODS.Joker {
+  key = 'JohnJoker',
+  rarity = 1,
+  atlas = 'JokersTextures',
+  pos = { x = 0, y = 3 },
+  cost = 1,
+  loc_txt = {
+      name = 'john',
+      
+      text = {
+          "he kills you"
+      }
+  },
+  blueprint_compat = false,
+
+  -- config = { extra = { death = false } },
+
+  -- loc_vars = function(self, info_queue, card)
+  --     return { vars = { card.ability.extra.death} }
+  --   end,
+
+    
+  calculate = function(self, card, context)
+    if context.before and not context.blueprint then
+      G.E_MANAGER:add_event(Event({
+        trigger = "before",
+        delay = 2,
+        func = function ()
+				  card_eval_status_text(card, 'extra', nil, nil, nil,{
+				  	message = "john",
+				  	colour = G.C.MULT,
+				  	card = card,
+				  })
+          return true
+        end
+      }))
+      
+      G.STATE = G.STATES.GAME_OVER -- kills but doesn't let the message pop before. the message is too delayed anyway for some reason. putting the death thing in an event doesn't work.
+
+      return nil, true
+    end
+  end
 }
 
 -- george Joker
