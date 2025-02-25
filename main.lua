@@ -347,6 +347,13 @@ SMODS.Joker {
 	end
 }
 
+function kill (death)
+  if death and G.STAGE == G.STAGES.RUN then 
+    G.STATE = G.STATES.GAME_OVER;
+    G.STATE_COMPLETE = false
+  end
+end
+
 -- john Joker
 SMODS.Joker {
   key = 'JohnJoker',
@@ -368,24 +375,24 @@ SMODS.Joker {
   -- loc_vars = function(self, info_queue, card)
   --     return { vars = { card.ability.extra.death} }
   --   end,
-
     
   calculate = function(self, card, context)
     if context.before and not context.blueprint then
+
+        card_eval_status_text(card, 'extra', nil, nil, nil,{
+					message = "john",
+					colour = G.C.MULT,
+					card = card,
+				})
+
       G.E_MANAGER:add_event(Event({
-        trigger = "before",
-        delay = 2,
-        func = function ()
-				  card_eval_status_text(card, 'extra', nil, nil, nil,{
-				  	message = "john",
-				  	colour = G.C.MULT,
-				  	card = card,
-				  })
-          return true
+        trigger = "after", 
+        delay = 0.5, 
+        func = function() 
+            kill(true)
+            return true 
         end
       }))
-      
-      G.STATE = G.STATES.GAME_OVER -- kills but doesn't let the message pop before. the message is too delayed anyway for some reason. putting the death thing in an event doesn't work.
 
       return nil, true
     end
