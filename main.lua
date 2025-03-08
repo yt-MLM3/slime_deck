@@ -208,24 +208,76 @@ SMODS.Sticker {
   },
   badge_colour = HEX("64C3FE"),
 
-  default_compat = true,
   rate = 1,
-  sets = {
-    Joker = true
-  },
+
+
+  should_apply = function(self, card, context)
+    if card.ability.set == "Joker" and not card.ability.eternal and not card.ability.perishable then
+      return true
+    end
+  end,
 
   config = {
     extra = {
-      chips = G.P_CENTERS.j_ice_cream.config.extra.chips,
+      -- chips = G.P_CENTERS.j_ice_cream.config.extra.chips,
+      chips = 15,
       chip_mod = G.P_CENTERS.j_ice_cream.config.extra.chip_mod,
     }
   },
 
-  loc_vars = function(self, info_queue, center)
-    return { vars = { self.config.extra.chips, self.config.extra.chip_mod } }
+  loc_vars = function(self, info_queue, card)
+    return { vars = { card.ability.chips, card.ability.chip_mod} }
   end,
 
-  should_apply = true,
+  apply = function(self, card, val)
+    card.ability[self.key] = val
+    if card.ability[self.key] then
+      card.ability.chips = self.config.extra.chips
+      card.ability.chip_mod = self.config.extra.chip_mod
+    end
+  end,
+
+  calculate = function(self, card, context)
+    -- if not card.ability.chips then card.ability.chips = self.config.extra.chips end
+    -- if not card.ability.chip_mod then card.ability.chip_mod = self.config.extra.chip_mod end
+
+    if context.joker_main then
+      return {
+        chips = card.ability.chips
+      }
+    end
+    
+    if context.after and not context.blueprint then
+      if card.ability.chips - card.ability.chip_mod <= 0 then 
+        G.E_MANAGER:add_event(Event({
+          func = function()
+            play_sound('tarot1')
+            card.T.r = -0.2
+            card:juice_up(0.3, 0.4)
+            card.states.drag.is = true
+            card.children.center.pinch.x = true
+            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+              func = function()
+                G.jokers:remove_card(card)
+                card:remove()
+                card = nil
+                return true; end})) 
+              return true
+              end
+            })) 
+            return {
+              message = localize('k_melted_ex'),
+              colour = G.C.CHIPS
+            }
+      else
+        card.ability.chips = card.ability.chips - card.ability.chip_mod
+        return {
+          message = localize{type='variable',key='a_chips_minus',vars={card.ability.chip_mod}},
+          colour = G.C.CHIPS
+        }
+      end
+    end
+  end
 }
 
 
