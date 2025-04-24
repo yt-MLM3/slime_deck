@@ -7,43 +7,43 @@ SMODS.load_file('credits.lua')()
 
 
 
--- Lily Joker -- not working
-SMODS.Joker {
-  discovered = true,
-  unlocked = false,
+-- -- Lily Joker -- not working
+-- SMODS.Joker {
+--   discovered = true,
+--   unlocked = false,
 
-    key = 'LilyJoker',
-    rarity = 1,
-    atlas = 'JokersTextures',
-    pos = { x = 0, y = 0 },
-    cost = 4,
+--     key = 'LilyJoker',
+--     rarity = 1,
+--     atlas = 'JokersTextures',
+--     pos = { x = 0, y = 0 },
+--     cost = 4,
 
-    loc_txt = {
-        name = 'Lily',
+--     loc_txt = {
+--         name = 'Lily',
         
-        text = {
-            "{C:chips}+#2#{} Chips",
-            "{C:mult}+#1#{} Mult",
-            "{C:inactive}mario"
-        }
-    },
+--         text = {
+--             "{C:chips}+#2#{} Chips",
+--             "{C:mult}+#1#{} Mult",
+--             "{C:inactive}mario"
+--         }
+--     },
 
-    config = { extra = { mult = 10, chips = 20 } },
+--     config = { extra = { mult = 10, chips = 20 } },
 
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult, card.ability.extra.chips } }
-      end,
+--     loc_vars = function(self, info_queue, card)
+--         return { vars = { card.ability.extra.mult, card.ability.extra.chips } }
+--       end,
 
       
-  calculate = function(self, card, context)
-    if context.joker_main then
-      return {
-        chips = card.ability.extra.chips,
-        mult = card.ability.extra.mult,
-      }
-    end
-  end,
-}
+--   calculate = function(self, card, context)
+--     if context.joker_main then
+--       return {
+--         chips = card.ability.extra.chips,
+--         mult = card.ability.extra.mult,
+--       }
+--     end
+--   end,
+-- }
 
 
 -- Spooker Joker
@@ -138,147 +138,143 @@ SMODS.Joker {
 }
 
 
--- Mint Joker -- not working
-SMODS.Joker {
-  discovered = true,
-  unlocked = false,
+-- -- Mint Joker -- not working
+-- SMODS.Joker {
+--   discovered = true,
+--   unlocked = true,
 
 
-  key = 'MintJoker',
-  rarity = 2,
-  atlas = 'JokersTextures',
-  pos = { x = 2, y = 0 },
-  cost = 4,
+--   key = 'MintJoker',
+--   rarity = 2,
+--   atlas = 'JokersTextures',
+--   pos = { x = 2, y = 0 },
+--   cost = 4,
 
-  loc_txt = {
-    name = 'Mint',
+--   loc_txt = {
+--     name = 'Mint',
         
-    text = {
-      "{C:chips}#1#{} chips",
-      -- "{s:0.8}(They can get debuffed)",
-      -- "chips: #1# / chips removed: #2#",
-    }
-  },
+--     text = {
+--       "{C:chips}#1#{} chips",
+--       -- "{s:0.8}(They can get debuffed)",
+--       -- "chips: #1# / chips removed: #2#",
+--     }
+--   },
 
-  config = { extra = { chips = 8 }},
-  loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.perish_tally } }
-  end,
-  calculate = function(self, card, context)
-    if context.other_joker and card ~= context.other_joker then
-      return {
-        chips = card.ability.extra.chips
-      }
-    end
+--   config = { extra = { chips = 8 }},
+--   loc_vars = function(self, info_queue, card)
+--     return { vars = { card.ability.perish_tally } }
+--   end,
+--   calculate = function(self, card, context)
+--     if context.other_joker and card ~= context.other_joker then
+--       return {
+--         chips = card.ability.extra.chips
+--       }
+--     end
 
-    if context.after and card.ability.extra.chips - card.ability.extra.chip_removal >= 0 then
-      card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chip_removal
-      return {
-        message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chip_removal}},
-        colour = G.C.CHIPS
-      }
-    end
+--     if context.after and card.ability.extra.chips - card.ability.extra.chip_removal >= 0 then
+--       card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chip_removal
+--       return {
+--         message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chip_removal}},
+--         colour = G.C.CHIPS
+--       }
+--     end
 
-    -- if context. then
-    --   card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chip_removal
-    --   return {
-    --     message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chip_removal}},
-    --     colour = G.C.CHIPS
-    --   }
-    -- end
+--     -- if context. then
+--     --   card.ability.extra.chips = card.ability.extra.chips - card.ability.extra.chip_removal
+--     --   return {
+--     --     message = localize{type='variable',key='a_chips_minus',vars={card.ability.extra.chip_removal}},
+--     --     colour = G.C.CHIPS
+--     --   }
+--     -- end
 
-  end
-}
+--   end
+-- }
 
--- Mint Joker Ice Cream Sticker
-SMODS.Sticker {
-  key = 'MintSticker',
-  atlas = "StickersTextures",
-  pos = { x = 0, y = 0 },
-  loc_txt = {
-    name = 'Mint Ice Cream',
-    text = {
-      "This card acts like",
-      "an {C:attention}Ice Cream{}",
-      "{C:inactive}({C:chips}+#1#{C:inactive} chips left)",
-      "{s:0.8}(gets eaten at 0 chips)",
+-- -- Mint Joker Ice Cream Sticker
+-- SMODS.Sticker {
+--   key = 'MintSticker',
+--   atlas = "StickersTextures",
+--   pos = { x = 0, y = 0 },
+--   loc_txt = {
+--     name = 'Mint Ice Cream',
+--     text = {
+--       "This card acts like",
+--       "an {C:attention}Ice Cream{}",
+--       "{C:inactive}({C:chips}+#1#{C:inactive} chips left)",
+--       "{s:0.8}(gets eaten at 0 chips)",
 
-    },
-    label = "Ice Cream"
-  },
-  badge_colour = HEX("64C3FE"),
+--     },
+--     label = "Ice Cream"
+--   },
+--   badge_colour = HEX("64C3FE"),
 
-  rate = 1,
+--   should_apply = function(self, card, center, area, bypass_roll)
+--     if card.ability.set == "Joker" and not card.ability.eternal and not card.ability.perishable then
+--       return true
+--     end
+--   end,
 
+--   config = {
+--     extra = {
+--       chips = G.P_CENTERS.j_ice_cream.config.extra.chips,
+--       chip_mod = G.P_CENTERS.j_ice_cream.config.extra.chip_mod,
+--     }
+--   },
 
-  should_apply = function(self, card, context)
-    if card.ability.set == "Joker" and not card.ability.eternal and not card.ability.perishable then
-      return true
-    end
-  end,
+--   loc_vars = function(self, info_queue, card)
+--     return { vars = { card.ability.chips, card.ability.chip_mod} }
+--   end,
 
-  config = {
-    extra = {
-      -- chips = G.P_CENTERS.j_ice_cream.config.extra.chips,
-      chips = 15,
-      chip_mod = G.P_CENTERS.j_ice_cream.config.extra.chip_mod,
-    }
-  },
+--   apply = function(self, card, val)
+--     card.ability[self.key] = val
+--     if card.ability[self.key] then
+--       card.ability.chips = self.config.extra.chips
+--       card.ability.chip_mod = self.config.extra.chip_mod
+--     end
+--   end,
 
-  loc_vars = function(self, info_queue, card)
-    return { vars = { card.ability.chips, card.ability.chip_mod} }
-  end,
+--   calculate = function(self, card, context)
+--     -- if not card.ability.chips then card.ability.chips = self.config.extra.chips end
+--     -- if not card.ability.chip_mod then card.ability.chip_mod = self.config.extra.chip_mod end
 
-  apply = function(self, card, val)
-    card.ability[self.key] = val
-    if card.ability[self.key] then
-      card.ability.chips = self.config.extra.chips
-      card.ability.chip_mod = self.config.extra.chip_mod
-    end
-  end,
-
-  calculate = function(self, card, context)
-    -- if not card.ability.chips then card.ability.chips = self.config.extra.chips end
-    -- if not card.ability.chip_mod then card.ability.chip_mod = self.config.extra.chip_mod end
-
-    if context.joker_main then
-      return {
-        chips = card.ability.chips
-      }
-    end
+--     if context.joker_main then
+--       return {
+--         chips = card.ability.chips
+--       }
+--     end
     
-    if context.after and not context.blueprint then
-      if card.ability.chips - card.ability.chip_mod <= 0 then 
-        G.E_MANAGER:add_event(Event({
-          func = function()
-            play_sound('tarot1')
-            card.T.r = -0.2
-            card:juice_up(0.3, 0.4)
-            card.states.drag.is = true
-            card.children.center.pinch.x = true
-            G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
-              func = function()
-                G.jokers:remove_card(card)
-                card:remove()
-                card = nil
-                return true; end})) 
-              return true
-              end
-            })) 
-            return {
-              message = localize('k_melted_ex'),
-              colour = G.C.CHIPS
-            }
-      else
-        card.ability.chips = card.ability.chips - card.ability.chip_mod
-        return {
-          message = localize{type='variable',key='a_chips_minus',vars={card.ability.chip_mod}},
-          colour = G.C.CHIPS
-        }
-      end
-    end
-  end
-}
+--     if context.after and not context.blueprint then
+--       if card.ability.chips - card.ability.chip_mod <= 0 then 
+--         G.E_MANAGER:add_event(Event({
+--           func = function()
+--             play_sound('tarot1')
+--             card.T.r = -0.2
+--             card:juice_up(0.3, 0.4)
+--             card.states.drag.is = true
+--             card.children.center.pinch.x = true
+--             G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
+--               func = function()
+--                 G.jokers:remove_card(card)
+--                 card:remove()
+--                 card = nil
+--                 return true; end})) 
+--               return true
+--               end
+--             })) 
+--             return {
+--               message = localize('k_melted_ex'),
+--               colour = G.C.CHIPS
+--             }
+--       else
+--         card.ability.chips = card.ability.chips - card.ability.chip_mod
+--         return {
+--           message = localize{type='variable',key='a_chips_minus',vars={card.ability.chip_mod}},
+--           colour = G.C.CHIPS
+--         }
+--       end
+--     end
+--   end
+-- }
 
 
 -- Ivory Joker
